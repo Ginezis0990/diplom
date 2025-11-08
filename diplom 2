@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Мой первый сайт</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #f0f8ff;
+		}
+
+		h1 {
+			color: #2c3e50;
+			text-align: center;
+		}
+
+		.content {
+			background-color: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+
+		.button {
+			display: inline-block;
+			background-color: #3498db;
+			color: white;
+			padding: 10px 20px;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			margin-top: 15px;
+			transition: background-color 0.3s;
+		}
+
+		.button:hover {
+			background-color: #2980b9;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="content">
+		<h1>Добро пожаловать на мой сайт!</h1>
+
+		<p>Это мой первый веб-сайт, созданный с помощью HTML и CSS.</p>
+
+		<h2>О чем этот сайт?</h2>
+		<p>Этот сайт показывает, что я умею создавать веб-страницы .</p>
+
+		<h2>Полезные ссылки</h2>
+		<ul>
+			<li><a href="#">Главная страница</a></li>
+			<li><a href="#">Вторая страница</a></li>
+			<li><a href="#">Третья страница</a></li>
+		</ul>
+
+		<!-- Кнопка для перехода на другую страницу -->
+		<a href="page2.html" class="button">Перейти на вторую страницу</a>
+
+		<p><strong>Спасибо за посещение!</strong></p>
+	</div>
+</body>
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Многоуровневый список и таблица</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		}
+
+		body {
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #f5f7fa;
+			color: #333;
+			line-height: 1.6;
+		}
+
+		h2 {
+			color: #2c3e50;
+			border-bottom: 2px solid #3498db;
+			padding-bottom: 10px;
+			margin-top: 30px;
+		}
+
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 30px;
+			margin-top: 20px;
+		}
+
+		.list-section,
+		.table-section {
+			flex: 1;
+			min-width: 300px;
+			background: white;
+			border-radius: 8px;
+			padding: 20px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		ol,
+		ul {
+			margin-left: 20px;
+		}
+
+		li {
+			margin-bottom: 8px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 15px 0;
+		}
+
+		th,
+		td {
+			border: 1px solid #ddd;
+			padding: 12px 15px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #3498db;
+			color: white;
+			font-weight: 600;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f8f9fa;
+		}
+
+		tr:hover {
+			background-color: #e3f2fd;
+		}
+
+		.header {
+			text-align: center;
+			background: linear-gradient(135deg, #3498db, #2c3e50);
+			color: white;
+			padding: 25px;
+			border-radius: 8px;
+			margin-bottom: 25px;
+		}
+
+		.footer {
+			text-align: center;
+			margin-top: 30px;
+			padding: 15px;
+			color: #7f8c8d;
+			font-size: 0.9em;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="header">
+		<h1></h1>
+		<p>таблица времен года</p>
+	</div>
+
+		</div>
+
+		<div class="table-section">
+			<h2>Таблица сколько дней в каждом месяце в 2026 году</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Столбец 1</th>
+						<th>Столбец 2</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>январь</td>
+						<td>31 дней</td>
+					</tr>
+					<tr>
+						<td>февраль</td>
+						<td>28 дней</td>
+					</tr>
+					<tr>
+						<td>март</td>
+						<td>31 дней</td>
+					</tr>
+					<tr>
+						<td>апрель</td>
+						<td>30 дней</td>
+					</tr>
+					<tr>
+						<td>май</td>
+						<td>31 дней</td>
+					</tr>
+					<tr>
+						<td>июнь</td>
+						<td>30 дней</td>
+					</tr>
+					<tr>
+						<td>июль</td>
+						<td>31 дней</td>
+					</tr>
+					<tr>
+						<td>август</td>
+						<td>31 дней</td>
+					</tr>
+					<tr>
+						<td>сентябрь</td>
+						<td>30 дней</td>
+					</tr>
+					<tr>
+						<td>ноябрь</td>
+						<td>30 дней </td>
+					</tr>
+					<tr>
+						<td>октябрь</td>
+						<td>31 дней</td>
+					</tr>
+					<tr>
+						<
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="footer">
+		<p></p>
+	</div>
+</body>
+
+</html>
+</html>
