@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Мой первый сайт</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #f0f8ff;
+		}
+
+		h1 {
+			color: #2c3e50;
+			text-align: center;
+		}
+
+		.content {
+			background-color: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+
+		.button {
+			display: inline-block;
+			background-color: #3498db;
+			color: white;
+			padding: 10px 20px;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			margin-top: 15px;
+			transition: background-color 0.3s;
+		}
+
+		.button:hover {
+			background-color: #2980b9;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="content">
+		<h1>Добро пожаловать на мой сайт!</h1>
+
+		<p>Это мой первый веб-сайт, созданный с помощью HTML и CSS.</p>
+
+		<h2>О чем этот сайт?</h2>
+		<p>Этот сайт показывает, что я умею создавать веб-страницы .</p>
+
+		<h2>Полезные ссылки</h2>
+		<ul>
+			<li><a href="#">Главная страница</a></li>
+			<li><a href="#">Вторая страница</a></li>
+			<li><a href="#">Третья страница</a></li>
+		</ul>
+
+		<!-- Кнопка для перехода на другую страницу -->
+		<a href="page2.html" class="button">Перейти на вторую страницу</a>
+
+		<p><strong>Спасибо за посещение!</strong></p>
+	</div>
+</body>
+
+</html>
