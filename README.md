@@ -1,1 +1,313 @@
-# diplom
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Мой первый сайт</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #f0f8ff;
+			overflow-x: hidden;
+		}
+
+		h1 {
+			color: #2c3e50;
+			text-align: center;
+			animation: fadeInDown 1s ease-out;
+		}
+
+		.content {
+			background-color: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+			animation: fadeIn 1.5s ease-out;
+		}
+
+		.button {
+			display: inline-block;
+			background-color: #3498db;
+			color: white;
+			padding: 10px 20px;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			margin-top: 15px;
+			transition: all 0.3s;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.button:hover {
+			background-color: #2980b9;
+			transform: translateY(-3px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.button:active {
+			transform: translateY(-1px);
+		}
+
+		.button::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 5px;
+			height: 5px;
+			background: rgba(255, 255, 255, 0.5);
+			opacity: 0;
+			border-radius: 100%;
+			transform: scale(1, 1) translate(-50%);
+			transform-origin: 50% 50%;
+		}
+
+		.button:focus:not(:active)::after {
+			animation: ripple 1s ease-out;
+		}
+
+		@keyframes ripple {
+			0% {
+				transform: scale(0, 0);
+				opacity: 0.5;
+			}
+			100% {
+				transform: scale(20, 20);
+				opacity: 0;
+			}
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes fadeInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.animated-text {
+			animation: colorChange 5s infinite alternate;
+			font-weight: bold;
+		}
+
+		@keyframes colorChange {
+			0% {
+				color: #2c3e50;
+			}
+			25% {
+				color: #3498db;
+			}
+			50% {
+				color: #e74c3c;
+			}
+			75% {
+				color: #2ecc71;
+			}
+			100% {
+				color: #9b59b6;
+			}
+		}
+
+		.floating {
+			animation: floating 3s ease-in-out infinite;
+		}
+
+		@keyframes floating {
+			0% {
+				transform: translateY(0px);
+			}
+			50% {
+				transform: translateY(-10px);
+			}
+			100% {
+				transform: translateY(0px);
+			}
+		}
+
+		.pulse {
+			animation: pulse 2s infinite;
+		}
+
+		@keyframes pulse {
+			0% {
+				transform: scale(1);
+			}
+			50% {
+				transform: scale(1.05);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		.list-item {
+			opacity: 0;
+			transform: translateX(-20px);
+			animation: slideInRight 0.5s forwards;
+		}
+
+		.list-item:nth-child(1) {
+			animation-delay: 0.2s;
+		}
+
+		.list-item:nth-child(2) {
+			animation-delay: 0.4s;
+		}
+
+		.list-item:nth-child(3) {
+			animation-delay: 0.6s;
+		}
+
+		@keyframes slideInRight {
+			from {
+				opacity: 0;
+				transform: translateX(-20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		.typing-text {
+			overflow: hidden;
+			border-right: 2px solid #3498db;
+			white-space: nowrap;
+			margin: 0 auto;
+			animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+		}
+
+		@keyframes typing {
+			from {
+				width: 0;
+			}
+			to {
+				width: 100%;
+			}
+		}
+
+		@keyframes blink-caret {
+			from, to {
+				border-color: transparent;
+			}
+			50% {
+				border-color: #3498db;
+			}
+		}
+
+		.bounce-in {
+			animation: bounceIn 1s;
+		}
+
+		@keyframes bounceIn {
+			0% {
+				transform: scale(0.1);
+				opacity: 0;
+			}
+			60% {
+				transform: scale(1.2);
+				opacity: 1;
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		/* Анимированный фон */
+		.animated-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+			background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+			background-size: 400% 400%;
+			animation: gradient 15s ease infinite;
+		}
+
+		@keyframes gradient {
+			0% {
+				background-position: 0% 50%;
+			}
+			50% {
+				background-position: 100% 50%;
+			}
+			100% {
+				background-position: 0% 50%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="animated-bg"></div>
+	<div class="content">
+		<h1 class="floating">Добро пожаловать на мой сайт!</h1>
+
+		<p class="typing-text">my website page.</p>
+
+		<h2 class="animated-text">О чем этот сайт?</h2>
+		<p>Этот сайт показывает, что я умею создавать веб-страницы.</p>
+
+		<h2 class="pulse">Полезные ссылки</h2>
+		<ul>
+			<li class="list-item"><a href="#">Главная страница</a></li>
+			<li class="list-item"><a href="#">Вторая страница</a></li>
+			<li class="list-item"><a href="#">Третья страница</a></li>
+		</ul>
+
+		<!-- Кнопка для перехода на другую страницу -->
+		<a href="page2.html" class="button">Перейти на вторую страницу</a>
+
+		<p class="bounce-in"><strong>Спасибо за посещение!</strong></p>
+	</div>
+
+	<script>
+		// Добавляем эффект параллакса для фона
+		document.addEventListener('mousemove', function(e) {
+			const bg = document.querySelector('.animated-bg');
+			const x = e.clientX / window.innerWidth;
+			const y = e.clientY / window.innerHeight;
+			bg.style.transform = `translate(-${x * 10}px, -${y * 10}px)`;
+		});
+
+		// Добавляем анимацию при скролле
+		document.addEventListener('DOMContentLoaded', function() {
+			const animatedElements = document.querySelectorAll('.list-item, .bounce-in');
+			
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.style.animationPlayState = 'running';
+					}
+				});
+			}, { threshold: 0.1 });
+			
+			animatedElements.forEach(el => {
+				observer.observe(el);
+			});
+		});
+	</script>
+</body>
+
+</html># diplom
