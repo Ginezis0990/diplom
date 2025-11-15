@@ -1,246 +1,1094 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Мой первый сайт</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 20px;
-			background-color: #f0f8ff;
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивный календарь времен года 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-		h1 {
-			color: #2c3e50;
-			text-align: center;
-		}
+        :root {
+            --spring-color: #ffb6c1;
+            --summer-color: #87ceeb;
+            --autumn-color: #d2691e;
+            --winter-color: #e6f3ff;
+            --primary-color: #3498db;
+            --dark-color: #2c3e50;
+        }
 
-		.content {
-			background-color: white;
-			padding: 20px;
-			border-radius: 10px;
-			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-		}
+        body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-image: url('https://avatars.mds.yandex.net/i?id=4383900da06d0886e8def3c97b6ea7b0e3b8a11a-12714255-images-thumbs&n=13');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
 
-		.button {
-			display: inline-block;
-			background-color: #3498db;
-			color: white;
-			padding: 10px 20px;
-			text-decoration: none;
-			border-radius: 5px;
-			font-weight: bold;
-			margin-top: 15px;
-			transition: background-color 0.3s;
-		}
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
 
-		.button:hover {
-			background-color: #2980b9;
-		}
-	</style>
+        /* Навигация */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            padding: 15px 0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn.active {
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Заголовок */
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '❄️🌸☀️🍂';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100px); }
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Основной контейнер */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Секции */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 i {
+            color: var(--primary-color);
+        }
+
+        /* Карточки времен года */
+        .seasons-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .season-card {
+            padding: 25px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .season-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .season-card:hover::before {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .season-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .season-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .spring-card {
+            background-image: url('https://i.pinimg.com/736x/8b/6d/71/8b6d71a7c7e5b0e5e5b5e5d5c5e5d5e5.jpg'), linear-gradient(135deg, var(--spring-color), #98fb98);
+            border-color: #ff69b4;
+        }
+
+        .summer-card {
+            background-image: url('https://i.pinimg.com/736x/7a/3d/7a/7a3d7a7a7a7a7a7a7a7a7a7a7a7a7a7a.jpg'), linear-gradient(135deg, var(--summer-color), #f0e68c);
+            border-color: #ffa500;
+        }
+
+        .autumn-card {
+            background-image: url('https://i.pinimg.com/736x/9a/6b/7a/9a6b7a7a7a7a7a7a7a7a7a7a7a7a7a7a.jpg'), linear-gradient(135deg, var(--autumn-color), #daa520);
+            border-color: #8b4513;
+        }
+
+        .winter-card {
+            background-image: url('https://i.pinimg.com/736x/5c/3d/3e/5c3d3e3e3e3e3e3e3e3e3e3e3e3e3e3e.jpg'), linear-gradient(135deg, var(--winter-color), #b0c4de);
+            border-color: #4682b4;
+        }
+
+        .season-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .season-title {
+            font-size: 1.6em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .season-icon {
+            font-size: 1.8em;
+        }
+
+        .season-months {
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .season-description {
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* Таблица */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 14px 16px;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            position: relative;
+        }
+
+        th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255,255,255,0.5);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+            transform: scale(1.01);
+        }
+
+        .month-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        /* Прогресс бар года */
+        .year-progress {
+            margin: 25px 0;
+        }
+
+        .progress-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--spring-color), var(--summer-color), var(--autumn-color), var(--winter-color));
+            border-radius: 10px;
+            width: 25%;
+            transition: width 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Погода */
+        .weather-widget {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .weather-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .weather-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .weather-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .weather-temp {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        /* Активности по сезонам */
+        .activities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .activity-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Факты */
+        .facts-container {
+            margin-top: 20px;
+        }
+
+        .fact-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .fact-card:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: #2c3e50;
+            font-size: 0.9em;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Темная тема */
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        .dark-mode .section {
+            background: rgba(40, 40, 40, 0.95);
+            color: #f0f0f0;
+        }
+
+        .dark-mode .fact-card {
+            background: #2a2a2a;
+        }
+
+        /* Кнопка темной темы */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .season-title {
+                font-size: 1.3em;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Дополнительные стили для новых секций */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .countdown {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            border-radius: 10px;
+        }
+
+        .countdown-timer {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .season-details {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+        }
+    </style>
 </head>
 
 <body>
-	<div class="content">
-		<h1>Добро пожаловать на мой сайт!</h1>
+    <!-- Кнопка переключения темы -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
 
-		<p>Это мой первый веб-сайт, созданный с помощью HTML и CSS.</p>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="nav-btn active" data-section="seasons">
+                <i class="fas fa-calendar-alt"></i> Времена года
+            </button>
+            <button class="nav-btn" data-section="calendar">
+                <i class="fas fa-table"></i> Календарь
+            </button>
+            <button class="nav-btn" data-section="weather">
+                <i class="fas fa-cloud-sun"></i> Погода
+            </button>
+            <button class="nav-btn" data-section="activities">
+                <i class="fas fa-hiking"></i> Активности
+            </button>
+            <button class="nav-btn" data-section="facts">
+                <i class="fas fa-lightbulb"></i> Факты
+            </button>
+        </div>
+    </nav>
 
-		<h2>О чем этот сайт?</h2>
-		<p>Этот сайт показывает, что я умею создавать веб-страницы .</p>
+    <!-- Заголовок -->
+    <div class="header">
+        <h1>Интерактивный календарь 2026</h1>
+        <p>Исследуйте красоту времен года и их особенности</p>
+    </div>
 
-		<h2>Полезные ссылки</h2>
-		<ul>
-			<li><a href="#">Главная страница</a></li>
-			<li><a href="#">Вторая страница</a></li>
-			<li><a href="#">Третья страница</a></li>
-		</ul>
+    <!-- Основной контент -->
+    <div class="container">
+        <!-- Левая колонка -->
+        <div class="left-column">
+            <!-- Секция времен года -->
+            <div class="section animated" id="seasons-section">
+                <h2><i class="fas fa-seedling"></i> Времена года</h2>
+                
+                <div class="year-progress">
+                    <h3>Прогресс года: <span id="progressPercent">25%</span></h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="yearProgress"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Январь</span>
+                        <span>Декабрь</span>
+                    </div>
+                </div>
 
-		<!-- Кнопка для перехода на другую страницу -->
-		<a href="page2.html" class="button">Перейти на вторую страницу</a>
+                <div class="seasons-grid">
+                    <div class="season-card spring-card" data-season="spring">
+                        <div class="season-header">
+                            <div class="season-title">
+                                <span class="season-icon">🌱</span> Весна
+                            </div>
+                            <div class="season-months">Март - Май</div>
+                        </div>
+                        <p class="season-description">Пробуждение природы, цветение, теплые дни</p>
+                    </div>
 
-		<p><strong>Спасибо за посещение!</strong></p>
-	</div>
+                    <div class="season-card summer-card" data-season="summer">
+                        <div class="season-header">
+                            <div class="season-title">
+                                <span class="season-icon">☀️</span> Лето
+                            </div>
+                            <div class="season-months">Июнь - Август</div>
+                        </div>
+                        <p class="season-description">Самые теплые месяцы, отпуска, ягоды и фрукты</p>
+                    </div>
+
+                    <div class="season-card autumn-card" data-season="autumn">
+                        <div class="season-header">
+                            <div class="season-title">
+                                <span class="season-icon">🍂</span> Осень
+                            </div>
+                            <div class="season-months">Сентябрь - Ноябрь</div>
+                        </div>
+                        <p class="season-description">Золотая пора, урожай, подготовка к зиме</p>
+                    </div>
+
+                    <div class="season-card winter-card" data-season="winter">
+                        <div class="season-header">
+                            <div class="season-title">
+                                <span class="season-icon">❄️</span> Зима
+                            </div>
+                            <div class="season-months">Декабрь - Февраль</div>
+                        </div>
+                        <p class="season-description">Снег, праздники, зимние виды спорта</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция активностей -->
+            <div class="section animated" id="activities-section" style="display: none;">
+                <h2><i class="fas fa-hiking"></i> Сезонные активности</h2>
+                <div class="activities">
+                    <div class="activity-card">
+                        <div class="activity-icon">🌸</div>
+                        <h3>Весенние</h3>
+                        <p>Пикники, садоводство, велопрогулки</p>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon">🏖️</div>
+                        <h3>Летние</h3>
+                        <p>Плавание, походы, кемпинг</p>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon">🍁</div>
+                        <h3>Осенние</h3>
+                        <p>Сбор грибов, фотосессии, ярмарки</p>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon">⛷️</div>
+                        <h3>Зимние</h3>
+                        <p>Лыжи, коньки, новогодние праздники</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="right-column">
+            <!-- Секция календаря -->
+            <div class="section animated" id="calendar-section">
+                <h2><i class="fas fa-calendar"></i> Календарь 2026</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">365</div>
+                        <div>дней в году</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div>месяцев</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">4</div>
+                        <div>времени года</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">52</div>
+                        <div>недели</div>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Месяц</th>
+                            <th>Дней</th>
+                            <th>Сезон</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="month-cell">⛄ Январь</td>
+                            <td>31</td>
+                            <td>Зима</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🌨️ Февраль</td>
+                            <td>28</td>
+                            <td>Зима</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🌷 Март</td>
+                            <td>31</td>
+                            <td>Весна</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🌸 Апрель</td>
+                            <td>30</td>
+                            <td>Весна</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🌼 Май</td>
+                            <td>31</td>
+                            <td>Весна</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🌞 Июнь</td>
+                            <td>30</td>
+                            <td>Лето</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🏖️ Июль</td>
+                            <td>31</td>
+                            <td>Лето</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🌻 Август</td>
+                            <td>31</td>
+                            <td>Лето</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🍎 Сентябрь</td>
+                            <td>30</td>
+                            <td>Осень</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🍂 Октябрь</td>
+                            <td>31</td>
+                            <td>Осень</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🍁 Ноябрь</td>
+                            <td>30</td>
+                            <td>Осень</td>
+                        </tr>
+                        <tr>
+                            <td class="month-cell">🎄 Декабрь</td>
+                            <td>31</td>
+                            <td>Зима</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Секция погоды -->
+            <div class="section animated" id="weather-section" style="display: none;">
+                <h2><i class="fas fa-cloud-sun-rain"></i> Погода по сезонам</h2>
+                <div class="weather-widget">
+                    <div class="weather-card">
+                        <div class="weather-icon">🌷</div>
+                        <h3>Весна</h3>
+                        <div class="weather-temp">+15°C</div>
+                        <p>Переменная облачность</p>
+                    </div>
+                    <div class="weather-card">
+                        <div class="weather-icon">☀️</div>
+                        <h3>Лето</h3>
+                        <div class="weather-temp">+25°C</div>
+                        <p>Солнечно</p>
+                    </div>
+                    <div class="weather-card">
+                        <div class="weather-icon">🍂</div>
+                        <h3>Осень</h3>
+                        <div class="weather-temp">+10°C</div>
+                        <p>Дождливо</p>
+                    </div>
+                    <div class="weather-card">
+                        <div class="weather-icon">❄️</div>
+                        <h3>Зима</h3>
+                        <div class="weather-temp">-5°C</div>
+                        <p>Снегопад</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция фактов -->
+            <div class="section animated" id="facts-section" style="display: none;">
+                <h2><i class="fas fa-lightbulb"></i> Интересные факты</h2>
+                <div class="facts-container">
+                    <div class="fact-card">
+                        <h3>📅 Самое длинное время года</h3>
+                        <p>Лето - 92 дня в обычном году и 93 дня в високосном</p>
+                    </div>
+                    <div class="fact-card">
+                        <h3>🌍 Смена сезонов</h3>
+                        <p>Сезоны меняются из-за наклона земной оси на 23.5 градуса</p>
+                    </div>
+                    <div class="fact-card">
+                        <h3>❄️ Рекорд холода</h3>
+                        <p>Самая низкая температура зимой в России: -71.2°C в Оймяконе</p>
+                    </div>
+                    <div class="fact-card">
+                        <h3>☀️ Рекорд тепла</h3>
+                        <p>Самая высокая температура летом в России: +45.4°C в Калмыкии</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция обратного отсчета -->
+    <div class="section animated">
+        <h2><i class="fas fa-hourglass-half"></i> До следующего сезона</h2>
+        <div class="countdown">
+            <h3>До начала весны 2026 года осталось:</h3>
+            <div class="countdown-timer" id="countdownTimer">00:00:00:00</div>
+            <p>1 марта 2026 года</p>
+        </div>
+    </div>
+
+   >
+   
+    <!-- Модальное окно -->
+    <div class="modal" id="seasonModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Весна</h2>
+            <div id="modalContent">
+                <p>Информация о сезоне...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Навигация между секциями
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Убираем активный класс у всех кнопок
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Добавляем активный класс текущей кнопке
+                this.classList.add('active');
+                
+                // Скрываем все секции
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Показываем нужную секцию
+                const sectionId = this.getAttribute('data-section') + '-section';
+                document.getElementById(sectionId).style.display = 'block';
+            });
+        });
+
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        });
+
+        // Обратный отсчет до весны 2026
+        function updateCountdown() {
+            const springDate = new Date('March 1, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = springDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdownTimer').innerHTML = 
+                `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Прогресс года
+        function updateYearProgress() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 1);
+            const end = new Date(now.getFullYear(), 11, 31);
+            const total = end - start;
+            const passed = now - start;
+            const progress = (passed / total) * 100;
+            
+            document.getElementById('yearProgress').style.width = progress + '%';
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+        }
+
+        updateYearProgress();
+
+        // Модальное окно для сезонов
+        const modal = document.getElementById('seasonModal');
+        const closeModal = document.querySelector('.close-modal');
+
+        document.querySelectorAll('.season-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const season = this.getAttribute('data-season');
+                const title = this.querySelector('.season-title').textContent;
+                const months = this.querySelector('.season-months').textContent;
+                const description = this.querySelector('.season-description').textContent;
+                
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalContent').innerHTML = `
+                    <p><strong>Период:</strong> ${months}</p>
+                    <p><strong>Описание:</strong> ${description}</p>
+                    <h3>Особенности:</h3>
+                    <ul>
+                        <li>${getSeasonFeatures(season)}</li>
+                        <li>Средняя температура: ${getSeasonTemp(season)}</li>
+                        <li>Продолжительность: ${getSeasonDuration(season)}</li>
+                    </ul>
+                `;
+                
+                modal.style.display = 'flex';
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        function getSeasonFeatures(season) {
+            const features = {
+                spring: 'Цветение растений, возвращение перелетных птиц',
+                summer: 'Длинные дни, жаркая погода, созревание фруктов',
+                autumn: 'Листопад, сбор урожая, перелет птиц на юг',
+                winter: 'Снег, короткие дни, зимняя спячка животных'
+            };
+            return features[season] || 'Информация о сезоне';
+        }
+
+        function getSeasonTemp(season) {
+            const temps = {
+                spring: '+5°C до +15°C',
+                summer: '+18°C до +25°C',
+                autumn: '+5°C до +12°C',
+                winter: '-10°C до 0°C'
+            };
+            return temps[season] || 'Неизвестно';
+        }
+
+        function getSeasonDuration(season) {
+            const durations = {
+                spring: '92 дня',
+                summer: '93 дня',
+                autumn: '90 дней',
+                winter: '90 дней'
+            };
+            return durations[season] || 'Неизвестно';
+        }
+
+        // Анимация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.animated').forEach((element, index) => {
+                element.style.animationDelay = (index * 0.2) + 's';
+            });
+        });
+
+        // Случайные факты при наведении
+        document.querySelectorAll('.season-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const facts = [
+                    "Знаете ли вы? В этом сезоне происходит много интересного!",
+                    "Интересный факт: продолжительность сезона может меняться!",
+                    "Забавно: животные по-разному адаптируются к этому времени года!",
+                    "Знаете? Погода в этом сезоне очень переменчива!"
+                ];
+                const randomFact = facts[Math.floor(Math.random() * facts.length)];
+                
+                // Временная подсказка
+                const tooltip = document.createElement('div');
+                tooltip.className = 'fact-tooltip';
+                tooltip.textContent = randomFact;
+                tooltip.style.cssText = `
+                    position: absolute;
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 10px;
+                    border-radius: 5px;
+                    z-index: 1000;
+                    max-width: 200px;
+                    font-size: 0.8em;
+                `;
+                
+                this.appendChild(tooltip);
+                
+                setTimeout(() => {
+                    if (this.contains(tooltip)) {
+                        this.removeChild(tooltip);
+                    }
+                }, 3000);
+            });
+        });
+    </script>
 </body>
-<!DOCTYPE html>
-<html lang="ru">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Многоуровневый список и таблица</title>
-	<style>
-		* {
-			box-sizing: border-box;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		}
-
-		body {
-			max-width: 900px;
-			margin: 0 auto;
-			padding: 20px;
-			background-color: #f5f7fa;
-			color: #333;
-			line-height: 1.6;
-		}
-
-		h2 {
-			color: #2c3e50;
-			border-bottom: 2px solid #3498db;
-			padding-bottom: 10px;
-			margin-top: 30px;
-		}
-
-		.container {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 30px;
-			margin-top: 20px;
-		}
-
-		.list-section,
-		.table-section {
-			flex: 1;
-			min-width: 300px;
-			background: white;
-			border-radius: 8px;
-			padding: 20px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		}
-
-		ol,
-		ul {
-			margin-left: 20px;
-		}
-
-		li {
-			margin-bottom: 8px;
-		}
-
-		table {
-			width: 100%;
-			border-collapse: collapse;
-			margin: 15px 0;
-		}
-
-		th,
-		td {
-			border: 1px solid #ddd;
-			padding: 12px 15px;
-			text-align: left;
-		}
-
-		th {
-			background-color: #3498db;
-			color: white;
-			font-weight: 600;
-		}
-
-		tr:nth-child(even) {
-			background-color: #f8f9fa;
-		}
-
-		tr:hover {
-			background-color: #e3f2fd;
-		}
-
-		.header {
-			text-align: center;
-			background: linear-gradient(135deg, #3498db, #2c3e50);
-			color: white;
-			padding: 25px;
-			border-radius: 8px;
-			margin-bottom: 25px;
-		}
-
-		.footer {
-			text-align: center;
-			margin-top: 30px;
-			padding: 15px;
-			color: #7f8c8d;
-			font-size: 0.9em;
-		}
-	</style>
-</head>
-
-<body>
-	<div class="header">
-		<h1></h1>
-		<p>таблица времен года</p>
-	</div>
-
-		</div>
-
-		<div class="table-section">
-			<h2>Таблица сколько дней в каждом месяце в 2026 году</h2>
-			<table>
-				<thead>
-					<tr>
-						<th>Столбец 1</th>
-						<th>Столбец 2</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>январь</td>
-						<td>31 дней</td>
-					</tr>
-					<tr>
-						<td>февраль</td>
-						<td>28 дней</td>
-					</tr>
-					<tr>
-						<td>март</td>
-						<td>31 дней</td>
-					</tr>
-					<tr>
-						<td>апрель</td>
-						<td>30 дней</td>
-					</tr>
-					<tr>
-						<td>май</td>
-						<td>31 дней</td>
-					</tr>
-					<tr>
-						<td>июнь</td>
-						<td>30 дней</td>
-					</tr>
-					<tr>
-						<td>июль</td>
-						<td>31 дней</td>
-					</tr>
-					<tr>
-						<td>август</td>
-						<td>31 дней</td>
-					</tr>
-					<tr>
-						<td>сентябрь</td>
-						<td>30 дней</td>
-					</tr>
-					<tr>
-						<td>ноябрь</td>
-						<td>30 дней </td>
-					</tr>
-					<tr>
-						<td>октябрь</td>
-						<td>31 дней</td>
-					</tr>
-					<tr>
-						<
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-
-	<div class="footer">
-		<p></p>
-	</div>
-</body>
-
-</html>
 </html>
