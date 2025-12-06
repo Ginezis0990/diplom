@@ -637,6 +637,6 @@
             }, 3000);
         });
     </script>
-    https://ginezis0990.github.io/drweb/
+    <li><a href="https://vms.drweb.ru/scan_file/" target="_blank">антивирус</a></li>
 </body>
 </html>
