@@ -1,314 +1,530 @@
+
 <!DOCTYPE html>
 <html lang="ru">
-
-	
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Мой первый сайт</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 20px;
-			background-color: #f0f8ff;
-			overflow-x: hidden;
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Платформы для программистов | Обзор сервисов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-		h1 {
-			color: #2c3e50;
-			text-align: center;
-			animation: fadeInDown 1s ease-out;
-		}
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-		.content {
-			background-color: white;
-			padding: 20px;
-			border-radius: 10px;
-			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-			animation: fadeIn 1.5s ease-out;
-		}
+        /* Анимированный фон */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #0c4a6e, #1e3a8a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
 
-		.button {
-			display: inline-block;
-			background-color: #3498db;
-			color: white;
-			padding: 10px 20px;
-			text-decoration: none;
-			border-radius: 5px;
-			font-weight: bold;
-			margin-top: 15px;
-			transition: all 0.3s;
-			position: relative;
-			overflow: hidden;
-		}
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-		.button:hover {
-			background-color: #2980b9;
-			transform: translateY(-3px);
-			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-		}
+        /* Параллакс-слой */
+        .parallax-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white"/><circle cx="80" cy="40" r="1.5" fill="white"/><circle cx="45" cy="85" r="2.5" fill="white"/><circle cx="70" cy="10" r="1" fill="white"/><circle cx="10" cy="70" r="1.8" fill="white"/></svg>');
+            background-repeat: repeat;
+            background-size: 60px;
+        }
 
-		.button:active {
-			transform: translateY(-1px);
-		}
+        .content {
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            padding: 30px;
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-out;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
 
-		.button::after {
-			content: "";
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 5px;
-			height: 5px;
-			background: rgba(255, 255, 255, 0.5);
-			opacity: 0;
-			border-radius: 100%;
-			transform: scale(1, 1) translate(-50%);
-			transform-origin: 50% 50%;
-		}
+        h1 {
+            color: #0f172a;
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+        }
 
-		.button:focus:not(:active)::after {
-			animation: ripple 1s ease-out;
-		}
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
 
-		@keyframes ripple {
-			0% {
-				transform: scale(0, 0);
-				opacity: 0.5;
-			}
-			100% {
-				transform: scale(20, 20);
-				opacity: 0;
-			}
-		}
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
 
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-				transform: translateY(20px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
+        .typing-text {
+            overflow: hidden;
+            border-right: 2px solid #2563eb;
+            white-space: nowrap;
+            margin: 15px auto 25px auto;
+            animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+            font-size: 1.3rem;
+            text-align: center;
+            color: #1e293b;
+            font-weight: 500;
+        }
 
-		@keyframes fadeInDown {
-			from {
-				opacity: 0;
-				transform: translateY(-30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
 
-		.animated-text {
-			animation: colorChange 5s infinite alternate;
-			font-weight: bold;
-		}
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #2563eb; }
+        }
 
-		@keyframes colorChange {
-			0% {
-				color: #2c3e50;
-			}
-			25% {
-				color: #3498db;
-			}
-			50% {
-				color: #e74c3c;
-			}
-			75% {
-				color: #2ecc71;
-			}
-			100% {
-				color: #9b59b6;
-			}
-		}
+        .section-title {
+            font-size: 1.8rem;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2563eb;
+            display: inline-block;
+            animation: slideInRight 0.6s ease-out;
+        }
 
-		.floating {
-			animation: floating 3s ease-in-out infinite;
-		}
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
 
-		@keyframes floating {
-			0% {
-				transform: translateY(0px);
-			}
-			50% {
-				transform: translateY(-10px);
-			}
-			100% {
-				transform: translateY(0px);
-			}
-		}
+        .platform-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardReveal 0.6s forwards;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
 
-		.pulse {
-			animation: pulse 2s infinite;
-		}
+        .platform-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+        }
 
-		@keyframes pulse {
-			0% {
-				transform: scale(1);
-			}
-			50% {
-				transform: scale(1.05);
-			}
-			100% {
-				transform: scale(1);
-			}
-		}
+        @keyframes cardReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-		.list-item {
-			opacity: 0;
-			transform: translateX(-20px);
-			animation: slideInRight 0.5s forwards;
-		}
+        .card-header {
+            padding: 20px 20px 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid #eef2ff;
+        }
 
-		.list-item:nth-child(1) {
-			animation-delay: 0.2s;
-		}
+        .card-header h3 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin: 0;
+        }
 
-		.list-item:nth-child(2) {
-			animation-delay: 0.4s;
-		}
+        .icon {
+            font-size: 2.2rem;
+        }
 
-		.list-item:nth-child(3) {
-			animation-delay: 0.6s;
-		}
+        .card-body {
+            padding: 20px;
+        }
 
-		@keyframes slideInRight {
-			from {
-				opacity: 0;
-				transform: translateX(-20px);
-			}
-			to {
-				opacity: 1;
-				transform: translateX(0);
-			}
-		}
+        .pros, .cons {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
 
-		.typing-text {
-			overflow: hidden;
-			border-right: 2px solid #3498db;
-			white-space: nowrap;
-			margin: 0 auto;
-			animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-		}
+        .pros li, .cons li {
+            margin: 8px 0;
+            line-height: 1.4;
+        }
 
-		@keyframes typing {
-			from {
-				width: 0;
-			}
-			to {
-				width: 100%;
-			}
-		}
+        .pros li {
+            color: #065f46;
+            list-style-type: '✅ ';
+        }
 
-		@keyframes blink-caret {
-			from, to {
-				border-color: transparent;
-			}
-			50% {
-				border-color: #3498db;
-			}
-		}
+        .cons li {
+            color: #991b1b;
+            list-style-type: '❌ ';
+        }
 
-		.bounce-in {
-			animation: bounceIn 1s;
-		}
+        .pros-title, .cons-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
 
-		@keyframes bounceIn {
-			0% {
-				transform: scale(0.1);
-				opacity: 0;
-			}
-			60% {
-				transform: scale(1.2);
-				opacity: 1;
-			}
-			100% {
-				transform: scale(1);
-			}
-		}
+        .pros-title { color: #047857; }
+        .cons-title { color: #dc2626; }
 
-		/* Анимированный фон */
-		.animated-bg {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			z-index: -1;
-			background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-			background-size: 400% 400%;
-			animation: gradient 15s ease infinite;
-		}
+        .visit-link {
+            display: inline-block;
+            margin-top: 15px;
+            background: #2563eb;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
 
-		@keyframes gradient {
-			0% {
-				background-position: 0% 50%;
-			}
-			50% {
-				background-position: 100% 50%;
-			}
-			100% {
-				background-position: 0% 50%;
-			}
-		}
-	</style>
+        .visit-link:hover {
+            background: #1d4ed8;
+            transform: translateX(5px);
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Анимация для списка */
+        .list-item {
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInRight 0.5s forwards;
+            margin: 8px 0;
+        }
+
+        .list-item:nth-child(1) { animation-delay: 0.1s; }
+        .list-item:nth-child(2) { animation-delay: 0.3s; }
+        .list-item:nth-child(3) { animation-delay: 0.5s; }
+        .list-item:nth-child(4) { animation-delay: 0.7s; }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 25px 10px 10px 0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+        }
+
+        .button:active {
+            transform: translateY(-1px);
+        }
+
+        .bounce-in {
+            animation: bounceIn 0.8s;
+            display: inline-block;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .footer-thanks {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 720px) {
+            .content { padding: 18px; }
+            h1 { font-size: 1.7rem; }
+            .typing-text { font-size: 1rem; white-space: normal; border-right: none; animation: none; text-align: center; }
+        }
+    </style>
 </head>
-
 <body>
-	<div class="animated-bg"></div>
-	<div class="content">
-		<h1 class="floating">Добро пожаловать на мой сайт!</h1>
+    <div class="animated-bg"></div>
+    <div class="parallax-overlay"></div>
 
-		<p class="typing-text">my website page.</p>
+    <div class="content">
+        <h1 class="floating">💻 дипломная работа Белова Артема</h1>
+        <div class="typing-text">CodePen · GitHub · Figma · StackBlitz</div>
 
-		<h2 class="animated-text">О чем этот сайт?</h2>
-		<p>Этот сайт показывает, что я умею создавать веб-страницы.</p>
+        <p style="text-align: center; font-size: 1.05rem; margin-bottom: 15px;">
+            🌟 Лучшие инструменты для разработки, дизайна и совместной работы. 
+            Сравни плюсы и минусы и выбирай подходящий сервис.
+        </p>
 
-		<h2 class="pulse">Полезные ссылки</h2>
-		<ul>
-			<li class="list-item"><a href="#">Главная страница</a></li>
-			<li class="list-item"><a href="#">Вторая страница</a></li>
-			<li class="list-item"><a href="#">Третья страница</a></li>
-		</ul>
+        <!-- Сетка карточек с плюсами и минусами -->
+        <div class="cards-grid">
+            <!-- CodePen карточка -->
+            <div class="platform-card" style="animation-delay: 0.1s;">
+                <div class="card-header">
+                    <span class="icon">🖌️</span>
+                    <h3>CodePen</h3>
+                </div>
+                <div class="card-body">
+                    <div class="pros">
+                        <div class="pros-title">✅ Плюсы:</div>
+                        <li>Мгновенный просмотр HTML/CSS/JS в реальном времени</li>
+                        <li>Идеален для прототипирования и демо-фрагментов</li>
+                        <li>Большое сообщество и тысячи готовых пенов</li>
+                        <li>Не требует установки, работает в браузере</li>
+                    </div>
+                    <div class="cons">
+                        <div class="cons-title">❌ Минусы:</div>
+                        <li>Ограничения в бесплатной версии (приватные пенны — платно)</li>
+                        <li>Сложно работать с несколькими файлами/папками</li>
+                        <li>Нет полноценного бэкенда или серверной логики</li>
+                    </div>
+                    <a href="https://codepen.io" target="_blank" class="visit-link">🌐 Перейти на CodePen →</a>
+                </div>
+            </div>
 
-		<!-- Кнопка для перехода на другую страницу -->
-		<a href="page2.html" class="button">Перейти на вторую страницу</a>
+            <!-- GitHub карточка -->
+            <div class="platform-card" style="animation-delay: 0.2s;">
+                <div class="card-header">
+                    <span class="icon">🐙</span>
+                    <h3>GitHub</h3>
+                </div>
+                <div class="card-body">
+                    <div class="pros">
+                        <div class="pros-title">✅ Плюсы:</div>
+                        <li>Система контроля версий Git + мощный хостинг репозиториев</li>
+                        <li>Бесконечные возможности для Open Source</li>
+                        <li>GitHub Actions, Codespaces, Pages — бесплатно для базовых задач</li>
+                        <li>Огромное комьюнити, сотни тысяч проектов для обучения</li>
+                    </div>
+                    <div class="cons">
+                        <div class="cons-title">❌ Минусы:</div>
+                        <li>Порог вхождения для новичков (консоль, команды Git)</li>
+                        <li>Приватные репозитории с командами требуют платы</li>
+                        <li>Иногда медленная работа веб-интерфейса с большими файлами</li>
+                    </div>
+                    <a href="https://github.com" target="_blank" class="visit-link">🌐 Перейти на GitHub →</a>
+                </div>
+            </div>
 
-		<p class="bounce-in"><strong>Спасибо за посещение!</strong></p>
-	</div>
+            <!-- Figma карточка -->
+            <div class="platform-card" style="animation-delay: 0.3s;">
+                <div class="card-header">
+                    <span class="icon">🎨</span>
+                    <h3>Figma</h3>
+                </div>
+                <div class="card-body">
+                    <div class="pros">
+                        <div class="pros-title">✅ Плюсы:</div>
+                        <li>Лучший инструмент для UI/UX и прототипирования</li>
+                        <li>Режим реального времени и совместная работа как в Google Docs</li>
+                        <li>Кроссплатформенность (браузер + десктоп) + автовыгрузка стилей</li>
+                        <li>Бесплатный план для отдельных дизайнеров</li>
+                    </div>
+                    <div class="cons">
+                        <div class="cons-title">❌ Минусы:</div>
+                        <li>Не для разработки кода (только дизайн и макеты)</li>
+                        <li>Сложная навигация для новичков в дизайне</li>
+                        <li>Ограниченное количество проектов в бесплатной версии</li>
+                    </div>
+                    <a href="https://figma.com" target="_blank" class="visit-link">🌐 Перейти на Figma →</a>
+                </div>
+            </div>
 
-	<script>
-		// Добавляем эффект параллакса для фона
-		document.addEventListener('mousemove', function(e) {
-			const bg = document.querySelector('.animated-bg');
-			const x = e.clientX / window.innerWidth;
-			const y = e.clientY / window.innerHeight;
-			bg.style.transform = `translate(-${x * 10}px, -${y * 10}px)`;
-		});
+            <!-- StackBlitz карточка -->
+            <div class="platform-card" style="animation-delay: 0.4s;">
+                <div class="card-header">
+                    <span class="icon">⚡</span>
+                    <h3>StackBlitz</h3>
+                </div>
+                <div class="card-body">
+                    <div class="pros">
+                        <div class="pros-title">✅ Плюсы:</div>
+                        <li>Полноценная IDE в браузере с WebContainers (Node.js, npm)</li>
+                        <li>Мгновенный запуск Angular / React / Vue проектов</li>
+                        <li>Интеграция с GitHub, отличная скорость работы</li>
+                        <li>Поддержка серверной части и развёртывание приложений</li>
+                    </div>
+                    <div class="cons">
+                        <div class="cons-title">❌ Минусы:</div>
+                        <li>Некоторые библиотеки требуют адаптации для WebContainers</li>
+                        <li>Потребляет больше ресурсов браузера, чем обычный редактор</li>
+                        <li>Бесплатный тариф имеет ограничения по числу проектов</li>
+                    </div>
+                    <a href="https://stackblitz.com" target="_blank" class="visit-link">🌐 Перейти на StackBlitz →</a>
+                </div>
+            </div>
+        </div>
 
-		// Добавляем анимацию при скролле
-		document.addEventListener('DOMContentLoaded', function() {
-			const animatedElements = document.querySelectorAll('.list-item, .bounce-in');
-			
-			const observer = new IntersectionObserver((entries) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						entry.target.style.animationPlayState = 'running';
-					}
-				});
-			}, { threshold: 0.1 });
-			
-			animatedElements.forEach(el => {
-				observer.observe(el);
-			});
-		});
-	</script>
+       
+
+        <!-- Кнопки перехода на вторую страницу (имитация мультипейджа) + внешние ссылки -->
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
+            <a href="page2.html" class="button">📄 Перейти на вторую страницу </a>
+            <a href="#" class="button" id="showThanksBtn" style="background: linear-gradient(135deg, #0891b2, #4f46e5);">🎉 </a>
+        </div>
+
+        <div class="footer-thanks">
+            <p class="bounce-in"><strong>✨ Спасибо за внимание! Выбирай инструмент под свои задачи ✨</strong></p>
+            <p style="font-size: 0.85rem; margin-top: 15px;">⭐ CodePen — для быстрых прототипов, GitHub — для кода и команды, Figma — для дизайна, StackBlitz — для полноценных веб-приложений.</p>
+        </div>
+    </div>
+
+    <script>
+        // Плавный параллакс для фона
+        document.addEventListener('mousemove', function(e) {
+            const bg = document.querySelector('.animated-bg');
+            const overlay = document.querySelector('.parallax-overlay');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            if(bg) bg.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
+            if(overlay) overlay.style.transform = `translate(${x * 12}px, ${y * 12}px)`;
+        });
+
+        // Анимация при скролле для элементов списка и bounce-in (на случай, если observer донастроит)
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.list-item, .platform-card, .bounce-in, .section-title');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        if(entry.target.classList.contains('platform-card')) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -10px 0px" });
+            
+            animatedElements.forEach(el => {
+                if(el.classList.contains('platform-card')) {
+                    // уже получили свою анимацию
+                    observer.observe(el);
+                } else {
+                    observer.observe(el);
+                }
+            });
+
+            // кнопка с полезным советом
+            const thanksBtn = document.getElementById('showThanksBtn');
+            if(thanksBtn) {
+                thanksBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const adviceBox = document.createElement('div');
+                    adviceBox.className = 'platform-card';
+                    adviceBox.style.padding = '16px';
+                    adviceBox.style.marginTop = '20px';
+                    adviceBox.style.backgroundColor = '#fef9e3';
+                    adviceBox.style.borderLeft = '5px solid #f59e0b';
+                    adviceBox.innerHTML = `
+                        <strong>💡 Совет от профи:</strong><br>
+                        Используй <b>StackBlitz</b> для тестирования фреймворков, <b>CodePen</b> для маленьких сниппетов, 
+                        храни код на <b>GitHub</b>, а дизайн делай в <b>Figma</b> — идеальный стек современного разработчика!
+                        <br><br>
+                        <button id="closeAdvice" style="background:#ef4444; color:white; border:none; border-radius:40px; padding:6px 14px; cursor:pointer;">Закрыть</button>
+                    `;
+                    const existing = document.querySelector('.dynamic-advice');
+                    if(existing) existing.remove();
+                    adviceBox.classList.add('dynamic-advice');
+                    const footer = document.querySelector('.footer-thanks');
+                    footer.parentNode.insertBefore(adviceBox, footer);
+                    document.getElementById('closeAdvice')?.addEventListener('click', () => adviceBox.remove());
+                });
+            }
+
+            // Эффект ripple на кнопках (опционально)
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if(btn.id === 'showThanksBtn') return;
+                    const ripple = document.createElement('span');
+                    ripple.style.position = 'absolute';
+                    ripple.style.backgroundColor = 'rgba(255,255,255,0.5)';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'rippleEffect 0.6s linear';
+                    ripple.style.width = '30px';
+                    ripple.style.height = '30px';
+                    ripple.style.pointerEvents = 'none';
+                    const rect = btn.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const mouseY = e.clientY - rect.top;
+                    ripple.style.left = `${mouseX - 15}px`;
+                    ripple.style.top = `${mouseY - 15}px`;
+                    btn.style.position = 'relative';
+                    btn.style.overflow = 'hidden';
+                    btn.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+
+        // дополнительная анимация ripple (глобальный стиль)
+        const styleSheet = document.createElement("style");
+        styleSheet.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    transform: scale(20);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
 </body>
-
 </html>
